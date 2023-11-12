@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Plastic Bag User</string>
+    <string name="create_account">Create Account</string>
+    <string name="don_t_have_an_account">don\'t have an account:</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Emain</string>
+    <string name="already_have_an_account">Already have an Account:</string>
+    <string name="signup">Signup</string>
+    <string name="conform_password">Conform Password</string>
+    <string name="name">Name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="products">Products</string>
+    <string name="add_new_product">Add New Product</string>
+    <string name="order">Order</string>
+    <string name="dispatch">Dispatch</string>
+    <string name="add_edit_address">Add/Edit Address</string>
+    <string name="profile">Profile</string>
+    <string name="cart">Cart</string>
+    <string name="area_street">Area, Street</string>
+    <string name="landmark">Landmark</string>
+    <string name="pincode">Pincode</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="country">Country</string>
+    <string name="phone_no">Phone No</string>
+    <string name="back">Back</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="send">Send</string>
+    <string name="logout">Logout</string>
+    <string name="my_orders">My Orders</string>
+    <string name="place_order">Place Order</string>
+</resources>
