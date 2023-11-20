@@ -44,6 +44,7 @@ class MainViewModel() : ViewModel() {
     var addToCartCallBack: (() -> Unit)? = null
     var errorCallBack: (() -> Unit)? = null
     var orderPlacedCallBack: (() -> Unit)? = null
+    var outOfQuantityCallBack: (() -> Unit)? = null
 
 
     fun getProducts() {
@@ -113,7 +114,7 @@ class MainViewModel() : ViewModel() {
 
     fun addProductToCart(product: ProductDetails) {
 
-        val cartProducts = ProductDetails(product.productId, product.image, product.title, "1")
+        val cartProducts = ProductDetails(product.productId, product.title, "30")
 
         if (currentUserId != null) {
             database.child(USERS).child(currentUserId).child(CART).child(product.productId)
@@ -169,30 +170,56 @@ class MainViewModel() : ViewModel() {
 
     fun addPendingOrder(order: OrderDetails, totalQuantity: String) {
         val remainingQuantity = totalQuantity.toInt() - order.productDetails?.quantity?.toInt()!!
-        if (currentUserId != null) {
-            order.productDetails.let {
-                database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING)
-                    .child(it.productId).setValue(order.productDetails)
-                    .addOnSuccessListener {
-                        database.child(PRODUCTS).child(order.productDetails.productId).child(
-                            QUANTITY).setValue(remainingQuantity.toString())
-                        orderPlacedCallBack?.invoke()
-                    }
-                    .addOnFailureListener {
-                        errorCallBack?.invoke()
-                    }
 
-                database.child(USERS).child(currentUserId).child(CART).child(it.productId).removeValue()
+        if (remainingQuantity >= 0) {
+            if (currentUserId != null) {
+                order.productDetails.let {
+
+                    val orderChildRef = database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).push()
+                    val orderKey = orderChildRef.key
+
+                    val newOrder = OrderDetails(orderKey, order.userDetails, order.productDetails)
+
+                    orderChildRef.child(it.productId).setValue(order.productDetails)
+                        .addOnSuccessListener {
+                            database.child(PRODUCTS).child(order.productDetails.productId).child(
+                                QUANTITY).setValue(remainingQuantity.toString())
+                            orderPlacedCallBack?.invoke()
+                        }
+                        .addOnFailureListener {
+                            errorCallBack?.invoke()
+                        }
+
+//                    database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).push()
+//                        .child(it.productId).setValue(order.productDetails)
+//                        .addOnSuccessListener {
+//                            database.child(PRODUCTS).child(order.productDetails.productId).child(
+//                                QUANTITY).setValue(remainingQuantity.toString())
+//                            orderPlacedCallBack?.invoke()
+//                        }
+//                        .addOnFailureListener {
+//                            errorCallBack?.invoke()
+//                        }
+
+                    database.child(USERS).child(currentUserId).child(CART).child(it.productId).removeValue()
+
+                    if (orderKey != null) {
+                        database.child(ADMIN).child(ORDERS).child(PENDING).child(orderKey).child(it.productId).setValue(newOrder)
+                            .addOnSuccessListener {
+                            }
+                            .addOnFailureListener {
+                            }
+                    }
+                }
             }
+
+//            order.productDetails.let {
+//
+//            }
+        }else {
+            outOfQuantityCallBack?.invoke()
         }
 
-        order.productDetails.let {
-            database.child(ADMIN).child(ORDERS).child(PENDING).child(it.productId).setValue(order)
-                .addOnSuccessListener {
-                }
-                .addOnFailureListener {
-                }
-        }
 
     }
 

@@ -12,14 +12,6 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/productImage"
-            android:layout_width="60dp"
-            android:layout_height="70dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/FeatureImageShape" />
 
         <TextView
             android:id="@+id/title"
@@ -28,10 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toStartOf="@id/minusQuantity"
-            app:layout_constraintStart_toEndOf="@id/productImage"
-            app:layout_constraintTop_toTopOf="@id/productImage" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/addQuantity"
@@ -42,8 +34,11 @@
             app:shapeAppearanceOverlay="@style/FeatureImageShape"
             android:background="@color/addColor"
             android:tint="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/quantity"

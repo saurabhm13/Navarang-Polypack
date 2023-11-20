@@ -44,14 +44,20 @@ class CartFragment : Fragment() {
         binding.btnPlaceOrder.setOnClickListener {
             if (userDetails.userVerified) {
 
-                for(product in productList) {
-                    val order = OrderDetails(userDetails, product)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.getProductQuantity1(product.productId) { q ->
-                            viewModel.addPendingOrder(order, q)
+                if (productList.size > 0) {
+                    for(product in productList) {
+                        val order = OrderDetails("", userDetails, product)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            viewModel.getProductQuantity1(product.productId) { q ->
+                                viewModel.addPendingOrder(order, q)
+                            }
                         }
                     }
+                }else {
+                    Toast.makeText(activity, "Add Products", Toast.LENGTH_SHORT).show()
                 }
+
+
 
 //                if (userDetails.address == "") {
 //                    Toast.makeText(activity, "Add Address", Toast.LENGTH_SHORT).show()
@@ -65,12 +71,16 @@ class CartFragment : Fragment() {
 
         }
 
-        viewModel.addToCartCallBack = {
+        viewModel.orderPlacedCallBack = {
             Toast.makeText(activity, "Order Placed", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.errorCallBack = {
             Toast.makeText(activity, "Error Occurred, Try Again!!", Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.outOfQuantityCallBack = {
+            Toast.makeText(activity, "Out of Order", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
@@ -97,6 +107,7 @@ class CartFragment : Fragment() {
 
         viewModel.cartLiveData.observe(viewLifecycleOwner) {
             cartAdapter.setProductList(it)
+            productList.clear()
             productList.addAll(it)
         }
 

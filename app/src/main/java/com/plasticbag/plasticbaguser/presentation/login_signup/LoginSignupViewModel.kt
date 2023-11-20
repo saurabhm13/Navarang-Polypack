@@ -12,7 +12,8 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.plasticbag.plasticbaguser.model.UserDetails
 import com.plasticbag.plasticbaguser.util.Constants.Companion.ADMIN
-import com.plasticbag.plasticbaguser.util.Constants.Companion.LOGIN_REQUEST
+import com.plasticbag.plasticbaguser.util.Constants.Companion.NOT_VERIFIED
+import com.plasticbag.plasticbaguser.util.Constants.Companion.USER_LOGIN
 import com.plasticbag.plasticbaguser.util.Constants.Companion.USERS
 import com.plasticbag.plasticbaguser.util.Constants.Companion.USER_DETAILS
 import java.util.concurrent.TimeUnit
@@ -42,7 +43,7 @@ class LoginSignupViewModel(): ViewModel() {
                     userId?.let {
                         val user = UserDetails(username, email, phoneNo, userId, "", "", false)
                         database.child(USERS).child(userId).child(USER_DETAILS).setValue(user)
-                        database.child(ADMIN).child(LOGIN_REQUEST).child(userId).setValue(user)
+                        database.child(ADMIN).child(USER_LOGIN).child(NOT_VERIFIED).child(userId).setValue(user)
                     }
                     authCallback?.invoke()
                 } else {

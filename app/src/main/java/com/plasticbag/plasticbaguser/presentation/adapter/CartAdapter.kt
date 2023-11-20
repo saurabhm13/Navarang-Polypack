@@ -35,10 +35,6 @@ class CartAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
 
-        Glide.with(holder.itemView)
-            .load(productList[position].image)
-            .into(holder.binding.productImage)
-
         holder.binding.title.text = productList[position].title
         holder.binding.quantity.text = productList[position].quantity+" kg"
 

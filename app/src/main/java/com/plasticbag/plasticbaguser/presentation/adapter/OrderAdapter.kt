@@ -31,10 +31,6 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
 
-        Glide.with(holder.itemView)
-            .load(orderList[position].image)
-            .into(holder.binding.productImage)
-
         holder.binding.title.text = orderList[position].title
         holder.binding.quantity.text = orderList[position].quantity+" kg"
     }

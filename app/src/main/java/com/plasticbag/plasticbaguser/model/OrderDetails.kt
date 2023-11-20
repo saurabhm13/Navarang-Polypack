@@ -10,6 +10,7 @@ data class OrderDetails(
 //    val bayerPhoneNo: String,
 //    val bayerUserId: String,
 
+    val orderId: String? = null,
     val userDetails: UserDetails? = null,
     val productDetails: ProductDetails? = null
 

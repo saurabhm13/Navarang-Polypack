@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="@string/conform_password"/>
+            android:hint="@string/confirm_password"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,9 +163,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/btn_signup"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/conformPass_signup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/btn_signup"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

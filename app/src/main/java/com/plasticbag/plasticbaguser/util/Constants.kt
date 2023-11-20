@@ -8,7 +8,7 @@ class Constants {
         const val USERS = "users"
         const val USER_DETAILS = "userDetails"
         const val ADMIN_DATA = "adminData"
-        const val LOGIN_REQUEST = "loginRequests"
+        const val USER_LOGIN = "userLogin"
         const val ORDERS = "orders"
         const val CART = "cart"
 
@@ -24,6 +24,9 @@ class Constants {
         const val NAME = "name"
         const val EMAIL = "email"
         const val PHONE_NO = "phoneNo"
+
+        const val VERIFIED = "verified"
+        const val NOT_VERIFIED = "notVerified"
     }
 
 }

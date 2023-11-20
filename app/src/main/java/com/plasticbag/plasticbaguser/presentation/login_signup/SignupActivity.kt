@@ -34,7 +34,7 @@ class SignupActivity : AppCompatActivity() {
 
         binding.btnSignup.setOnClickListener {
 
-            binding.btnSignup.visibility = View.GONE
+            binding.btnSignup.visibility = View.INVISIBLE
             binding.progressBar.visibility = View.VISIBLE
 
             name = binding.nameSignup.editText?.text.toString()

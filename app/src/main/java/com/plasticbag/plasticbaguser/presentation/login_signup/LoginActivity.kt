@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
 
-            binding.btnLogin.visibility = View.GONE
+            binding.btnLogin.visibility = View.INVISIBLE
             binding.progressBar.visibility = View.VISIBLE
 
             email = binding.emailLogin.editText?.text.toString()

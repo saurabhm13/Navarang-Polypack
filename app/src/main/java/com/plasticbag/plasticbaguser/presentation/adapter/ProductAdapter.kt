@@ -33,10 +33,6 @@ class ProductAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
 
-        Glide.with(holder.itemView)
-            .load(productList[position].image)
-            .into(holder.binding.productImage)
-
         holder.binding.productTitle.text = productList[position].title
         holder.binding.productQuantity.text = productList[position].quantity+" kg"
 

@@ -22,7 +22,7 @@ class OrderActivity : AppCompatActivity() {
             when (position){
                 0 -> tab.text = "Pending"
                 1 -> tab.text = "Dispatched"
-                2 -> tab.text = "Delivered"
+//                2 -> tab.text = "Delivered"
             }
         }.attach()
 

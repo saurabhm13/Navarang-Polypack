@@ -39,10 +39,12 @@ class OrderViewModel(): ViewModel() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val orderList = mutableListOf<ProductDetails>()
 
-                    for (dataSnapshot in snapshot.children) {
-                        val order = dataSnapshot.getValue(ProductDetails::class.java)
-                        order?.let {
-                            orderList.add(order)
+                    for (orderSnapshot in snapshot.children) {
+                        for (productSnapshot in orderSnapshot.children) {
+                            val order = productSnapshot.getValue(ProductDetails::class.java)
+                            order?.let {
+                                orderList.add(order)
+                            }
                         }
                     }
 
@@ -64,10 +66,12 @@ class OrderViewModel(): ViewModel() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val orderList = mutableListOf<ProductDetails>()
 
-                    for (dataSnapshot in snapshot.children) {
-                        val order = dataSnapshot.getValue(ProductDetails::class.java)
-                        order?.let {
-                            orderList.add(order)
+                    for (orderSnapshot in snapshot.children) {
+                        for (productSnapshot in orderSnapshot.children) {
+                            val order = productSnapshot.getValue(ProductDetails::class.java)
+                            order?.let {
+                                orderList.add(order)
+                            }
                         }
                     }
 

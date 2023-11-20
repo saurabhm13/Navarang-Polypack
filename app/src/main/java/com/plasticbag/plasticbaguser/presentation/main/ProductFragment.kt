@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.plasticbag.plasticbaguser.databinding.FragmentProductBinding
 import com.plasticbag.plasticbaguser.presentation.adapter.ProductAdapter
 
@@ -55,7 +56,7 @@ class ProductFragment : Fragment() {
         )
 
         binding.productRv.apply {
-            layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(activity,  LinearLayoutManager.VERTICAL, false)
             adapter = productAdapter
         }
 

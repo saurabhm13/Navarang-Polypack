@@ -9,14 +9,14 @@ import com.plasticbag.plasticbaguser.presentation.orders.PendingOrderFragment
 
 class ViewPagerAdapter(activity: OrderActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> PendingOrderFragment()
             1 -> DispatchOrderFragment()
-            2 -> DeliveredOrderFragment()
+//            2 -> DeliveredOrderFragment()
             // Add more cases for additional tabs/fragments
             else -> PendingOrderFragment()
         }
