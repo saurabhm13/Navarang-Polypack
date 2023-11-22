@@ -11,7 +11,8 @@ import com.plasticbag.plasticbaguser.model.ProductDetails
 
 class CartAdapter(
     private val onAddQuantityClick: (ProductDetails) -> Unit,
-    private val onMinusQuantityClick: (ProductDetails) -> Unit
+    private val onMinusQuantityClick: (ProductDetails) -> Unit,
+    private val onQuantityClick: (ProductDetails) -> Unit
 ): RecyclerView.Adapter<CartAdapter.ProductViewHolder>() {
 
     private var productList = ArrayList<ProductDetails>()
@@ -36,7 +37,7 @@ class CartAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
 
         holder.binding.title.text = productList[position].title
-        holder.binding.quantity.text = productList[position].quantity+" kg"
+        holder.binding.quantity.text = (productList[position].quantity) + " kg"
 
         holder.binding.addQuantity.setOnClickListener {
             onAddQuantityClick.invoke(productList[position])
@@ -44,6 +45,10 @@ class CartAdapter(
 
         holder.binding.minusQuantity.setOnClickListener {
             onMinusQuantityClick.invoke(productList[position])
+        }
+
+        holder.binding.quantity.setOnClickListener {
+            onQuantityClick.invoke(productList[position])
         }
     }
 

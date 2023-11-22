@@ -25,7 +25,7 @@ class EditProfileViewModel(): ViewModel() {
     var successCallback: (() -> Unit)? = null
     var errorCallback: (() -> Unit)? = null
 
-    fun updateUserData(name: String, image: Uri, email: String, phoneNo: String) {
+    fun updateUserData(name: String, image: Uri, phoneNo: String) {
         val imageUri: Uri = image
         val imageRef = storageReference.child("users/images/${UUID.randomUUID()}")
         val uploadTask = imageRef.putFile(imageUri)
@@ -39,7 +39,7 @@ class EditProfileViewModel(): ViewModel() {
 
                 if (currentUserID != null) {
                     database.child(USERS).child(currentUserID).child(USER_DETAILS).child(NAME).setValue(name)
-                    database.child(USERS).child(currentUserID).child(USER_DETAILS).child(EMAIL).setValue(email)
+//                    database.child(USERS).child(currentUserID).child(USER_DETAILS).child(EMAIL).setValue(email)
                     database.child(USERS).child(currentUserID).child(USER_DETAILS).child(PHONE_NO).setValue(phoneNo)
                     database.child(USERS).child(currentUserID).child(USER_DETAILS).child(IMAGE).setValue(imageUrl)
                 }
@@ -55,10 +55,10 @@ class EditProfileViewModel(): ViewModel() {
         }
     }
 
-    fun updateTextUserData(name: String, email: String, phoneNo: String) {
+    fun updateTextUserData(name: String, phoneNo: String) {
         currentUserID?.let {
             database.child(USERS).child(currentUserID).child(USER_DETAILS).child("name").setValue(name)
-            database.child(USERS).child(currentUserID).child(USER_DETAILS).child("email").setValue(email)
+//            database.child(USERS).child(currentUserID).child(USER_DETAILS).child("email").setValue(email)
             database.child(USERS).child(currentUserID).child(USER_DETAILS).child("phoneNo").setValue(phoneNo)
                 .addOnSuccessListener {
                     successCallback?.invoke()

@@ -45,10 +45,11 @@ class MainViewModel() : ViewModel() {
     var errorCallBack: (() -> Unit)? = null
     var orderPlacedCallBack: (() -> Unit)? = null
     var outOfQuantityCallBack: (() -> Unit)? = null
+    var minimumQuantityCallBack: (() -> Unit)? = null
 
 
     fun getProducts() {
-        database.child(PRODUCTS).addValueEventListener(object : ValueEventListener {
+        database.child(PRODUCTS).orderByChild("title").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val productList = mutableListOf<ProductDetails>()
 
@@ -168,27 +169,43 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun editQuantity(product: ProductDetails, newQuantity: String) {
+
+        if (currentUserId != null) {
+            database.child(USERS).child(currentUserId).child(CART).child(product.productId)
+                .child(QUANTITY).setValue(newQuantity)
+                .addOnSuccessListener {
+                }
+                .addOnFailureListener {
+                    errorCallBack?.invoke()
+                }
+        }else {
+
+        }
+    }
+
     fun addPendingOrder(order: OrderDetails, totalQuantity: String) {
         val remainingQuantity = totalQuantity.toInt() - order.productDetails?.quantity?.toInt()!!
 
         if (remainingQuantity >= 0) {
-            if (currentUserId != null) {
-                order.productDetails.let {
+            if (order.productDetails.quantity.toInt() >= 30) {
+                if (currentUserId != null) {
+                    order.productDetails.let {
 
-                    val orderChildRef = database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).push()
-                    val orderKey = orderChildRef.key
+                        val orderChildRef = database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).push()
+                        val orderKey = orderChildRef.key
 
-                    val newOrder = OrderDetails(orderKey, order.userDetails, order.productDetails)
+                        val newOrder = OrderDetails(orderKey, order.userDetails, order.productDetails)
 
-                    orderChildRef.child(it.productId).setValue(order.productDetails)
-                        .addOnSuccessListener {
-                            database.child(PRODUCTS).child(order.productDetails.productId).child(
-                                QUANTITY).setValue(remainingQuantity.toString())
-                            orderPlacedCallBack?.invoke()
-                        }
-                        .addOnFailureListener {
-                            errorCallBack?.invoke()
-                        }
+                        orderChildRef.child(it.productId).setValue(order.productDetails)
+                            .addOnSuccessListener {
+                                database.child(PRODUCTS).child(order.productDetails.productId).child(
+                                    QUANTITY).setValue(remainingQuantity.toString())
+                                orderPlacedCallBack?.invoke()
+                            }
+                            .addOnFailureListener {
+                                errorCallBack?.invoke()
+                            }
 
 //                    database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).push()
 //                        .child(it.productId).setValue(order.productDetails)
@@ -201,17 +218,21 @@ class MainViewModel() : ViewModel() {
 //                            errorCallBack?.invoke()
 //                        }
 
-                    database.child(USERS).child(currentUserId).child(CART).child(it.productId).removeValue()
+                        database.child(USERS).child(currentUserId).child(CART).child(it.productId).removeValue()
 
-                    if (orderKey != null) {
-                        database.child(ADMIN).child(ORDERS).child(PENDING).child(orderKey).child(it.productId).setValue(newOrder)
-                            .addOnSuccessListener {
-                            }
-                            .addOnFailureListener {
-                            }
+                        if (orderKey != null) {
+                            database.child(ADMIN).child(ORDERS).child(PENDING).child(orderKey).child(it.productId).setValue(newOrder)
+                                .addOnSuccessListener {
+                                }
+                                .addOnFailureListener {
+                                }
+                        }
                     }
                 }
+            }else {
+                minimumQuantityCallBack?.invoke()
             }
+
 
 //            order.productDetails.let {
 //

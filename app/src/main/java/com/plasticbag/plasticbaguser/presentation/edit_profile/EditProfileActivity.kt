@@ -26,7 +26,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var name: String
     private lateinit var image: String
-    private lateinit var email: String
+//    private lateinit var email: String
     private lateinit var phoneNo: String
 
     private var selectedImageUri: Uri? = null
@@ -71,13 +71,13 @@ class EditProfileActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.VISIBLE
 
             name = binding.name.editText?.text.toString().trim()
-            email = binding.email.editText?.text.toString().trim()
+//            email = binding.email.editText?.text.toString().trim()
             phoneNo = binding.phoneNo.editText?.text.toString().trim()
 
             if (croppedImageUri == null) {
-                viewModel.updateTextUserData(name, email, phoneNo)
+                viewModel.updateTextUserData(name, phoneNo)
             }else {
-                croppedImageUri?.let { it1 -> viewModel.updateUserData(name, it1, email, phoneNo) }
+                croppedImageUri?.let { it1 -> viewModel.updateUserData(name, it1, phoneNo) }
             }
         }
 
@@ -96,11 +96,11 @@ class EditProfileActivity : AppCompatActivity() {
     private fun setIncomingData() {
         name = intent.getStringExtra(NAME).toString()
         image = intent.getStringExtra(IMAGE).toString()
-        email= intent.getStringExtra(EMAIL).toString()
+//        email= intent.getStringExtra(EMAIL).toString()
         phoneNo = intent.getStringExtra(PHONE_NO).toString()
 
         binding.name.editText?.setText(name)
-        binding.email.editText?.setText(email)
+//        binding.email.editText?.setText(email)
         binding.phoneNo.editText?.setText(phoneNo)
 
         if (image.isEmpty() || image == "null") {

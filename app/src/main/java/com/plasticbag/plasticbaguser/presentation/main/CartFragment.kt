@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,10 @@ class CartFragment : Fragment() {
     private var productList = mutableListOf<ProductDetails>()
     private lateinit var userDetails: UserDetails
 
+//    private val customDialog = activity?.let { CustomDialog(it) }
+//    private val cd = CustomDialog(requireContext())
+    private lateinit var customDialog: CustomDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +45,7 @@ class CartFragment : Fragment() {
         viewModel.getCartProducts()
         prepareRecyclerView()
 
+//        customDialog = activity?.let { CustomDialog(it) }!!
 
         binding.btnPlaceOrder.setOnClickListener {
             if (userDetails.userVerified) {
@@ -83,6 +89,10 @@ class CartFragment : Fragment() {
             Toast.makeText(activity, "Out of Order", Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.minimumQuantityCallBack = {
+            Toast.makeText(activity, "Minimum quantity is 30Kg", Toast.LENGTH_SHORT).show()
+        }
+
         return binding.root
     }
 
@@ -97,6 +107,11 @@ class CartFragment : Fragment() {
             },
             onMinusQuantityClick = {
                 viewModel.minusQuantity(it)
+            },
+            onQuantityClick = {
+//                customDialog.show()
+//                cd.show()
+                showCustomDialog(it)
             }
         )
 
@@ -111,6 +126,11 @@ class CartFragment : Fragment() {
             productList.addAll(it)
         }
 
+    }
+
+    private fun showCustomDialog(productDetails: ProductDetails) {
+        val customDialog = CustomDialog(requireContext(), productDetails)
+        customDialog.show()
     }
 
 }

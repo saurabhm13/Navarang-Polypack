@@ -10,4 +10,7 @@
 
     <color name="textBgColor">#535353</color>
     <color name="textBgStrokeClr">#888888</color>
+
+    <color name="evenBackgroundColor">#7E7D7D</color>
+    <color name="oddBackgroundColor">#4A4A4A</color>
 </resources>
