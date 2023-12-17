@@ -26,9 +26,8 @@ class CartFragment : Fragment() {
     private var productList = mutableListOf<ProductDetails>()
     private lateinit var userDetails: UserDetails
 
-//    private val customDialog = activity?.let { CustomDialog(it) }
-//    private val cd = CustomDialog(requireContext())
     private lateinit var customDialog: CustomDialog
+    private lateinit var date: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +41,17 @@ class CartFragment : Fragment() {
             userDetails = it
         }
 
+        date = viewModel.getCurrentDate()
+
         viewModel.getCartProducts()
         prepareRecyclerView()
-
-//        customDialog = activity?.let { CustomDialog(it) }!!
 
         binding.btnPlaceOrder.setOnClickListener {
             if (userDetails.userVerified) {
 
                 if (productList.size > 0) {
                     for(product in productList) {
-                        val order = OrderDetails("", userDetails, product)
+                        val order = OrderDetails("", date, "", userDetails, product)
                         CoroutineScope(Dispatchers.IO).launch {
                             viewModel.getProductQuantity1(product.productId) { q ->
                                 viewModel.addPendingOrder(order, q)
@@ -62,14 +61,6 @@ class CartFragment : Fragment() {
                 }else {
                     Toast.makeText(activity, "Add Products", Toast.LENGTH_SHORT).show()
                 }
-
-
-
-//                if (userDetails.address == "") {
-//                    Toast.makeText(activity, "Add Address", Toast.LENGTH_SHORT).show()
-//                }else {
-//
-//                }
 
             }else {
                 Toast.makeText(activity, "Not Verified!!", Toast.LENGTH_SHORT).show()
@@ -82,7 +73,7 @@ class CartFragment : Fragment() {
         }
 
         viewModel.errorCallBack = {
-            Toast.makeText(activity, "Error Occurred, Try Again!!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Error: $it", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.outOfQuantityCallBack = {

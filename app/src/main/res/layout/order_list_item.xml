@@ -19,25 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-<!--        <TextView-->
-<!--            android:id="@+id/bayerAddress"-->
-<!--            style="@style/TertiaryText"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:layout_marginEnd="4dp"-->
-<!--            android:maxLines="2"-->
-<!--            android:text="patange road in front of mahatma bashwesher school omerga, "-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/productImage"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/title" />-->
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/quantity"
@@ -45,11 +30,83 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/pointViewOD"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/order_point_bg"
+            app:layout_constraintTop_toTopOf="@id/orderDate"
+            app:layout_constraintBottom_toBottomOf="@id/orderDate"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/pointViewDD"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/order_point_bg"
+            app:layout_constraintTop_toTopOf="@id/dispatchDate"
+            app:layout_constraintBottom_toBottomOf="@id/dispatchDate"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/horViewDD"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:background="@color/orderDateViewColor"
+            app:layout_constraintTop_toTopOf="@id/pointViewOD"
+            app:layout_constraintBottom_toBottomOf="@id/pointViewDD"
+            app:layout_constraintStart_toStartOf="@id/pointViewOD"
+            app:layout_constraintEnd_toEndOf="@id/pointViewOD"/>
+
+        <TextView
+            android:id="@+id/orderDate"
+            style="@style/TertiaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toEndOf="@id/pointViewOD"
+            app:layout_constraintTop_toBottomOf="@id/title"/>
+
+        <TextView
+            android:id="@+id/dispatchDate"
+            style="@style/TertiaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/pointViewDD"
+            app:layout_constraintTop_toBottomOf="@id/orderDate"/>
+`
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/deleteDispatchOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="13dp"
+            android:paddingEnd="13dp"
+            android:background="@drawable/delete_bg"
+            android:tint="@color/darkRed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantity"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -61,11 +61,6 @@ class ProfileFragment : Fragment() {
             startActivity(intoEditProfile)
         }
 
-//        binding.address.setOnClickListener {
-//            val intoAddEdit = Intent(activity, AddEditAddressActivity::class.java)
-//            startActivity(intoAddEdit)
-//        }
-
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intoLogin = Intent(activity, LoginActivity::class.java)
@@ -79,10 +74,6 @@ class ProfileFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun addDataFields() {
-
     }
 
 }

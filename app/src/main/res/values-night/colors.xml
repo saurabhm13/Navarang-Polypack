@@ -13,4 +13,9 @@
 
     <color name="evenBackgroundColor">#7E7D7D</color>
     <color name="oddBackgroundColor">#4A4A4A</color>
+
+    <color name="orderDateViewColor">#03A9F4</color>
+
+    <color name="darkRed">#AE0202</color>
+    <color name="lightRed">#FF8686</color>
 </resources>

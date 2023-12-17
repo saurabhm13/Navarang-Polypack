@@ -24,23 +24,23 @@ class DeliveredOrderFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDeliveredOrderBinding.inflate(layoutInflater, container, false)
 
-        viewModel.getDeliveredOrder()
-        prepareRecyclerView()
+//        viewModel.getDeliveredOrder()
+//        prepareRecyclerView()
 
         return binding.root
     }
 
-    private fun prepareRecyclerView() {
-        val orderAdapter = OrderAdapter()
-
-        binding.deliverOrders.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = orderAdapter
-        }
-
-        viewModel.deliverOrderLiveData.observe(viewLifecycleOwner) {
-            orderAdapter.setOrderList(it)
-        }
-    }
+//    private fun prepareRecyclerView() {
+//        val orderAdapter = OrderAdapter()
+//
+//        binding.deliverOrders.apply {
+//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+//            adapter = orderAdapter
+//        }
+//
+//        viewModel.deliverOrderLiveData.observe(viewLifecycleOwner) {
+//            orderAdapter.setOrderList(it)
+//        }
+//    }
 
 }

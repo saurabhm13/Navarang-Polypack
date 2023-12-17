@@ -32,7 +32,7 @@ class ProductFragment : Fragment() {
         }
         
         viewModel.errorCallBack = {
-            Toast.makeText(activity, "Error Occurred, Try Again!!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Error: $it", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.orderPlacedCallBack = {

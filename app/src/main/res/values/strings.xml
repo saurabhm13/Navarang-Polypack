@@ -33,4 +33,5 @@
     <string name="my_orders">My Orders</string>
     <string name="place_order">Place Order</string>
     <string name="edit_quantity">Edit Quantity</string>
+    <string name="recovery_info">If email exist on our database we will send a recovery email.</string>
 </resources>

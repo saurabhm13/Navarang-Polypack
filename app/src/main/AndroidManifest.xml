@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PlasticBagUser"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.login_signup.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity

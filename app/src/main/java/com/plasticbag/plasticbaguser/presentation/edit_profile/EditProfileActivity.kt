@@ -26,7 +26,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var name: String
     private lateinit var image: String
-//    private lateinit var email: String
     private lateinit var phoneNo: String
 
     private var selectedImageUri: Uri? = null
@@ -85,8 +84,8 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.errorCallback = {
-            Toast.makeText(this, "Error Occurred!!", Toast.LENGTH_SHORT).show()
+        viewModel.errorCallBack = {
+            Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
             binding.saveChanges.visibility = View.VISIBLE
             binding.progressBar.visibility = View.GONE
         }

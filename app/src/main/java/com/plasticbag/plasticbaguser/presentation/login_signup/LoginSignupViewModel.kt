@@ -32,7 +32,8 @@ class LoginSignupViewModel(): ViewModel() {
     val verificationError: LiveData<String> get() = _verificationError
 
     var authCallback: (() -> Unit)? = null
-    var errorCallback: (() -> Unit)? = null
+    var errorCallback: ((String) -> Unit)? = null
+    var resetEmailSendCallback: (() -> Unit)? = null
 
     // Register user by email and password and also save user data in realtime database
     fun registerUser(email: String, password: String, username: String, phoneNo: String) {
@@ -46,9 +47,10 @@ class LoginSignupViewModel(): ViewModel() {
                         database.child(ADMIN).child(USER_LOGIN).child(NOT_VERIFIED).child(userId).setValue(user)
                     }
                     authCallback?.invoke()
-                } else {
-                    _verificationError.value = "Can't Register User! Try Again"
                 }
+            }
+            .addOnFailureListener {
+                errorCallback?.invoke(it.message.toString())
             }
     }
 
@@ -58,9 +60,10 @@ class LoginSignupViewModel(): ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     authCallback?.invoke()
-                } else {
-                    errorCallback?.invoke()
                 }
+            }
+            .addOnFailureListener {
+                errorCallback?.invoke(it.message.toString())
             }
     }
 
@@ -125,6 +128,18 @@ class LoginSignupViewModel(): ViewModel() {
                 } else {
                     _verificationError.value = task.exception?.message
                 }
+            }
+    }
+
+    fun resetPassword(email: String) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    resetEmailSendCallback?.invoke()
+                }
+            }
+            .addOnFailureListener {
+                errorCallback?.invoke(it.message.toString())
             }
     }
 

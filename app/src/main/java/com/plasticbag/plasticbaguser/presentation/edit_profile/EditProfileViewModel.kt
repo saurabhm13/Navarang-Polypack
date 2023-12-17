@@ -23,7 +23,7 @@ class EditProfileViewModel(): ViewModel() {
     private val currentUserID = auth.currentUser?.uid
 
     var successCallback: (() -> Unit)? = null
-    var errorCallback: (() -> Unit)? = null
+    var errorCallBack: ((String) -> Unit)? = null
 
     fun updateUserData(name: String, image: Uri, phoneNo: String) {
         val imageUri: Uri = image
@@ -45,13 +45,11 @@ class EditProfileViewModel(): ViewModel() {
                 }
                 successCallback?.invoke()
 
-            }.addOnFailureListener { exception ->
-                // Handle the failure to get the download URL
-                errorCallback?.invoke()
+            }.addOnFailureListener {
+                it.message?.let { it1 -> errorCallBack?.invoke(it1) }
             }
-        }.addOnFailureListener { exception ->
-            // Handle the failure to upload the image
-            errorCallback?.invoke()
+        }.addOnFailureListener {
+            it.message?.let { it1 -> errorCallBack?.invoke(it1) }
         }
     }
 
@@ -64,7 +62,7 @@ class EditProfileViewModel(): ViewModel() {
                     successCallback?.invoke()
                 }
                 .addOnFailureListener {
-                    errorCallback?.invoke()
+                    it.message?.let { it1 -> errorCallBack?.invoke(it1) }
                 }
         }
 

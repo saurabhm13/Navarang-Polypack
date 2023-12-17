@@ -27,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
 
         if (auth.currentUser != null) {
-            // User is signed in (getCurrentUser() will be null if not signed in)
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent);
             finish();
@@ -38,10 +37,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intoSignup)
         }
 
-//        binding.phoneLoginCv.setOnClickListener {
-//            val intoMobileLogin = Intent(this, MobileLoginActivity::class.java)
-//            startActivity(intoMobileLogin)
-//        }
+        binding.forgotPassword.setOnClickListener {
+            val intoForgotPassword = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intoForgotPassword)
+        }
 
         binding.btnLogin.setOnClickListener {
 

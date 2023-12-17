@@ -27,6 +27,11 @@ class Constants {
 
         const val VERIFIED = "verified"
         const val NOT_VERIFIED = "notVerified"
+
+        const val ORDER_DATE = "orderDate"
+        const val DISPATCH_DATE = "dispatchDate"
+
+        const val PRODUCT_DETAILS = "productDetails"
     }
 
 }

@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.plasticbag.plasticbaguser.model.ProductDetails
+import com.plasticbag.plasticbaguser.model.UserOrderDetails
 import com.plasticbag.plasticbaguser.util.Constants.Companion.DELIVERED
 import com.plasticbag.plasticbaguser.util.Constants.Companion.DISPATCH
 import com.plasticbag.plasticbaguser.util.Constants.Companion.ORDERS
@@ -22,26 +23,27 @@ class OrderViewModel(): ViewModel() {
 
     private val currentUserId = auth.currentUser?.uid
 
-    private var _pendingOrderLiveData = MutableLiveData<List<ProductDetails>>()
-    val pendingOrderLiveData: LiveData<List<ProductDetails>> get() = _pendingOrderLiveData
+    private var _pendingOrderLiveData = MutableLiveData<List<UserOrderDetails>>()
+    val pendingOrderLiveData: LiveData<List<UserOrderDetails>> get() = _pendingOrderLiveData
 
-    private var _dispatchOrderLiveData = MutableLiveData<List<ProductDetails>>()
-    val dispatchOrderLiveData: LiveData<List<ProductDetails>> get() = _dispatchOrderLiveData
+    private var _dispatchOrderLiveData = MutableLiveData<List<UserOrderDetails>>()
+    val dispatchOrderLiveData: LiveData<List<UserOrderDetails>> get() = _dispatchOrderLiveData
 
     private var _deliverOrderLiveData = MutableLiveData<List<ProductDetails>>()
     val deliverOrderLiveData: LiveData<List<ProductDetails>> get() = _deliverOrderLiveData
 
+    var errorCallBack: ((String) -> Unit)? = null
 
     fun getPendingOrder() {
         if (currentUserId != null) {
             database.child(USERS).child(currentUserId).child(ORDERS).child(PENDING).addValueEventListener(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val orderList = mutableListOf<ProductDetails>()
+                    val orderList = mutableListOf<UserOrderDetails>()
 
                     for (orderSnapshot in snapshot.children) {
                         for (productSnapshot in orderSnapshot.children) {
-                            val order = productSnapshot.getValue(ProductDetails::class.java)
+                            val order = productSnapshot.getValue(UserOrderDetails::class.java)
                             order?.let {
                                 orderList.add(order)
                             }
@@ -52,7 +54,7 @@ class OrderViewModel(): ViewModel() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    errorCallBack?.invoke(error.message)
                 }
 
             })
@@ -64,11 +66,11 @@ class OrderViewModel(): ViewModel() {
             database.child(USERS).child(currentUserId).child(ORDERS).child(DISPATCH).addValueEventListener(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val orderList = mutableListOf<ProductDetails>()
+                    val orderList = mutableListOf<UserOrderDetails>()
 
                     for (orderSnapshot in snapshot.children) {
                         for (productSnapshot in orderSnapshot.children) {
-                            val order = productSnapshot.getValue(ProductDetails::class.java)
+                            val order = productSnapshot.getValue(UserOrderDetails::class.java)
                             order?.let {
                                 orderList.add(order)
                             }
@@ -79,10 +81,18 @@ class OrderViewModel(): ViewModel() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    errorCallBack?.invoke(error.message)
                 }
 
             })
+        }
+    }
+
+    fun deleteDispatchOrder(order: UserOrderDetails) {
+        order.orderId?.let {
+            if (currentUserId != null) {
+                database.child(USERS).child(currentUserId).child(ORDERS).child(DISPATCH).child(it).removeValue()
+            }
         }
     }
 
@@ -104,7 +114,7 @@ class OrderViewModel(): ViewModel() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    errorCallBack?.invoke(error.message)
                 }
 
             })

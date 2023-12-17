@@ -16,8 +16,6 @@ class ViewPagerAdapter(activity: OrderActivity) : FragmentStateAdapter(activity)
         return when (position) {
             0 -> PendingOrderFragment()
             1 -> DispatchOrderFragment()
-//            2 -> DeliveredOrderFragment()
-            // Add more cases for additional tabs/fragments
             else -> PendingOrderFragment()
         }
     }

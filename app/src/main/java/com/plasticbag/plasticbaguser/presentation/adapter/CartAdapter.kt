@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.plasticbag.plasticbaguser.databinding.CartListItemBinding
-import com.plasticbag.plasticbaguser.databinding.ProductListItemBinding
 import com.plasticbag.plasticbaguser.model.ProductDetails
 
 class CartAdapter(
